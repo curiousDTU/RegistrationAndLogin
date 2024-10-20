@@ -28,8 +28,40 @@ void login::Login()
     hash<string> mystdhash;
     int loginHashPassword = mystdhash(loginHash); */
   // ******************Enter your code here ***********************
+    
+    
+    string username, password;
+    system("CLS"); 
+    cout << "\n NOTE: This is for existing users. If new, kindly register." << endl;
+    cout << "\n\t\t\t Please enter the username and password: " << endl;
+    cout << "\t\t\t USERNAME: ";
+    cin >> username;
+    cout << "\t\t\t PASSWORD: ";
+    cin >> password;
+    hash<string> mystdhash;
+    string loginHashPassword = to_string(mystdhash(password)); 
+
+    retrieveData(username, loginHashPassword); 
 }
 
+
+void login::retrieveData(string username, string loginHashPassword) {
+    string id, recordPass;
+    ifstream inputFile("data.txt"); 
+    if (!inputFile) {
+        cout << "Error: Could not open the file!" << endl;// file is unable to open code is runnung fine
+        return;
+    }
+    while (inputFile >> id >> recordPass) {
+        if (id == username && recordPass == loginHashPassword) {
+            cout << "\n\t\t LOGIN SUCCESSFUL" << endl;
+            cout << "\n\t\t\tWELCOME" << endl;
+            return; 
+        }
+    }
+    cout << "ERROR! WRONG USERNAME OR PASSWORD " << endl;
+    inputFile.close();
+}
 void login::Registration()
 {
     string regUser, regPassword, regId, regPass, securityQuestion, regSecure, regCount;

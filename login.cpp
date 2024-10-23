@@ -56,6 +56,10 @@ void login::Registration()
     if (input.tellg() == 0)
     {
         ofstream f1("data.txt", ios::app);
+        if(!f1){
+            cerr<<"Error opening file for writing."<<endl;
+            return;
+        }
         f1 << regUser << ' ' << hashPassword << ' ' << securityHash << endl;
         system("clear");
         cout << "\n\t\t\t Registration successful!\n";
@@ -64,6 +68,10 @@ void login::Registration()
     else
     {
         ifstream input("data.txt");
+        if(!input){
+            cerr<<"Error opening file to reading."<<endl;
+            return;
+        }
         while (input >> regId >> regPass >> regSecure)
         {
             if (regUser == regId)
@@ -148,8 +156,13 @@ void login::DrunkGame()
 
 void login::ForgotPassword()
 {
+    #ifdef _WIN32
+            system("cls");
+    #else
+            system("clear");
+    #endif
 /*     string forgotChoice, count, secondCount;
-    system("clear");
+    
     cout << "\n\t\t\tPress 1 to enter USERNAME\n";
     cout << "\t\t\tPress 2 to go back to MENU\n";
     cout << "\n\t\t\tEnter choice: ";
